@@ -119,10 +119,76 @@ table.results-table tr.oracle td {
   font-style: italic;
 }
 
+.selection-tables > .column {
+  min-width: 0;
+}
+
+table.results-table.compact td:first-child {
+  white-space: normal;
+}
+
 .takeaway-list li {
   margin-bottom: 0.75rem;
 }
 
 .teaser .hero-body {
   padding-top: 0;
+}
+
+.venue-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.venue-logo {
+  height: 2.2rem;
+  width: auto;
+}
+
+.diagnostics img,
+.qualitative-row img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.qualitative-row {
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.regime-title {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem !important;
+}
+
+.box-legend {
+  font-weight: 700;
+}
+
+.box-legend.selector {
+  color: #dc2626;
+}
+
+.box-legend.oracle {
+  color: #16a34a;
+}
+
+h1.title.publication-title {
+  font-family: 'Google Sans', sans-serif !important;
+  font-size: 2.4rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+
+@media screen and (max-width: 768px) {
+  h1.title.publication-title {
+    font-size: 1.7rem !important;
+  }
+}
+
+.publication-authors .venue-link {
+  margin-top: 1rem;
 }
