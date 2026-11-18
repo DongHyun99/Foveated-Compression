@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs">
+  <meta name="description" content="Under a fixed visual-token budget, where should a VLM keep native resolution? Foveated Compression encodes an image once and mixes native and compressed visual tokens in a single sequence.">
+  <meta name="keywords" content="Foveated Compression, vision-language models, visual token compression, token efficiency, high resolution, Qwen2.5-VL, NeurIPS 2026, VLM4RWD">
+  <meta name="author" content="Donghyun Han, Jangho Park, Yuseok Bae">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs">
+  <meta property="og:description" content="Encode an image once, keep one region at native resolution, and compress the rest, all within a fixed visual-token budget.">
+  <meta property="og:url" content="https://donghyun99.github.io/Foveated-Compression/">
+  <meta property="og:image" content="https://donghyun99.github.io/Foveated-Compression/assets/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs">
+  <meta name="twitter:description" content="Encode an image once, keep one region at native resolution, and compress the rest, all within a fixed visual-token budget.">
+  <meta name="twitter:image" content="https://donghyun99.github.io/Foveated-Compression/assets/social_preview.png">
+
+  <meta name="citation_title" content="Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs">
+  <meta name="citation_author" content="Han, Donghyun">
+  <meta name="citation_author" content="Park, Jangho">
+  <meta name="citation_author" content="Bae, Yuseok">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="NeurIPS 2026 Workshop: VLM4RWD">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2610.07729">
+
+  <title>Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/project.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+
+  <!-- Title, authors, links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs</h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Donghyun Han<sup>1*†</sup>,</span>
+              <span class="author-block">Jangho Park<sup>2*</sup>,</span>
+              <span class="author-block">Yuseok Bae<sup>1</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>ETRI, South Korea</span>
+              <span class="author-block"><sup>2</sup>Kyung Hee University, South Korea</span>
+              <br>
+              <span class="author-block"><b><a href="https://vlm4rwd.github.io/" target="_blank">NeurIPS 2026 Workshop: VLM4RWD</a></b></span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>Equal contribution &nbsp; <sup>†</sup>Corresponding author</small></span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2610.07729" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2610.07729" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/Donghyun99/Foveated-Compression" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="assets/Foveated_Compression_Poster_A1.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-image"></i></span>
+                    <span>Poster</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser + TL;DR -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="figure-block">
+          <img src="assets/teaser.png" alt="Native resolution, image downsampling, visual token compression, crop, and Foveated Compression compared on one question">
+        </div>
+        <p class="tldr has-text-centered">
+          Under a fixed visual-token budget, <b>where</b> should a VLM keep native resolution?
+          <b>Foveated Compression</b> encodes an image once, keeps <b>one selected region at native fidelity</b>,
+          and compresses the rest, so the model keeps both global coverage and local detail at
+          <b>20.99%</b> of the visual tokens.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Visual tokens are a major source of inference cost in vision-language models, yet simple image downsampling remains a surprisingly strong compression baseline. This raises a complementary question: under a fixed token budget, where should visual fidelity be preserved? We introduce Foveated Compression, which encodes a full-resolution image once and represents it with a mixture of native- and compressed-resolution visual tokens. A behaviorally self-distilled Foveated Merger compresses local visual tokens while preserving compatibility with their native counterparts, and a lightweight Foveated Selector chooses one of nine spatial cells to retain at native resolution using exhaustive budget-matched intervention supervision. Token budgets count visual tokens entering the language model, which govern prefill cost and KV-cache memory; the vision encoder still runs once at full resolution. At 11.11% visual tokens, uniform Foveated Compression shows no significant paired difference from iso-token downsampling. At 20.99%, the learned selector significantly outperforms random and fixed allocation, but remains below strong whole-image resizing, showing that localized fidelity is not universally preferable. Within the same 3×3, K=1 action space, a budget-matched region-choice oracle reaches 82.73 macro accuracy versus 69.61 for the learned selector, revealing substantial unrealized headroom. Matched probing further shows that signals predicting when compression breaks the answer are substantially more accessible after language-model computation than to the lightweight prefill-free selector. These results expose complementary bottlenecks in region selection and compressed-region fidelity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Motivation -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Where Does Resolution Matter?</h2>
+      <div class="content has-text-justified">
+        <p>
+          Visual tokens drive prefill cost and KV-cache memory, and plain image downsampling already matches many
+          elaborate token-compression methods. Yet native detail is rarely needed <i>everywhere</i> in an image.
+          This turns the usual question of <i>how many</i> tokens to keep into a different one:
+        </p>
+      </div>
+      <div class="question-callout has-text-centered">
+        Under a fixed token budget, where should native fidelity be spent?
+      </div>
+      <div class="figure-block">
+        <img src="assets/diagnostics.png" alt="High-resolution diagnostics: retention under uniform compression, spatial informativeness, and oracle headroom" loading="lazy">
+        <p class="figure-caption">
+          High-resolution diagnostics. (a) Native-correct retention under uniform compression.
+          (b) Spatial informativeness and winner-region adjacency. (c) Performance headroom from the budget-matched K=1 region-choice oracle.
+        </p>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="value">86.1%</div><div class="label">of native-correct answers survive uniform 9:1 compression (ChartQA 38.8%, POPE 94.3%)</div></div>
+        <div class="stat"><div class="value">21.5%</div><div class="label">of examples are spatially informative: the chosen cell changes the outcome</div></div>
+        <div class="stat"><div class="value">41.9%</div><div class="label">of winner pairs are adjacent, vs. 33.3% for random pairs</div></div>
+        <div class="stat"><div class="value">82.73</div><div class="label">macro accuracy of the K=1 oracle at 20.99% tokens, above native (78.85)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Method</h2>
+      <div class="figure-block">
+        <img src="assets/overview.png" alt="Overview of Foveated Compression" loading="lazy">
+        <p class="figure-caption">
+          The image is encoded once by the frozen vision backbone, the Foveated Merger produces a globally compressed
+          representation, and the Foveated Selector restores one selected spatial cell with native visual tokens through in-place replacement.
+        </p>
+      </div>
+      <div class="columns is-multiline">
+        <div class="column is-one-third">
+          <div class="component-card">
+            <h3>Foveated Merger</h3>
+            <p>
+              Compresses each 3×3 block of native visual tokens into one token (11.11% of native), before Qwen's frozen visual merger.
+              It starts exactly from mean pooling and is trained by <b>behavioral self-distillation</b>: a KL loss against the frozen
+              model's own full-resolution answers, with no ground-truth labels. 32.77M parameters.
+            </p>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="component-card">
+            <h3>Foveated Selector</h3>
+            <p>
+              A lightweight, prefill-free scorer that reads native tokens, compressed tokens, and question embeddings, then ranks nine
+              coarse cells. It is supervised by running all nine <b>budget-matched K=1 interventions</b> and keeping tied winners as
+              sets (tie-aware loss). 10.8M parameters, no language-model pass.
+            </p>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="component-card">
+            <h3>Mixed-Resolution Sequence</h3>
+            <p>
+              The selected cell's compressed tokens are replaced in place by their native tokens. Both scales share the native
+              M-RoPE grid, and the sequence costs exactly <b>17/81 = 20.99%</b> of native tokens whichever cell is chosen, with no re-encoding.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main results -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Main Results</h2>
+      <div class="content has-text-justified">
+        <p>
+          Qwen2.5-VL-7B-Instruct on 37,610 examples across eight benchmarks. Token ratios count visual tokens entering the
+          language model. MME is divided by 28 only for the macro average.
+        </p>
+      </div>
+      <div class="results-table-wrapper">
+        <table class="results-table">
+          <thead>
+            <tr><th>Method</th><th>Tokens</th><th>GQA</th><th>MMB-E</th><th>MMB-C</th><th>MME</th><th>POPE</th><th>MMStar</th><th>OCR</th><th>ChartQA</th><th>Macro</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Native</td><td>100.00%</td><td>60.97</td><td>86.86</td><td>85.61</td><td>2356.7</td><td>87.74</td><td>60.93</td><td>80.20</td><td>84.28</td><td>78.85</td></tr>
+            <tr class="group-start"><td>Uniform Foveated Compression</td><td>11.11%</td><td>58.28</td><td>82.51</td><td>82.01</td><td>2130.5</td><td>84.34</td><td>50.20</td><td>49.30</td><td>34.24</td><td>64.62</td></tr>
+            <tr><td>Iso-Token Downsample</td><td>11.11%</td><td>55.88</td><td>82.77</td><td>81.75</td><td>2240.8</td><td>82.69</td><td>51.07</td><td>57.30</td><td>27.44</td><td>64.86</td></tr>
+            <tr class="group-start"><td>Random K=1</td><td>20.99%</td><td>58.40</td><td>84.18</td><td>82.86</td><td>2190.7</td><td>84.34</td><td>52.33</td><td>55.10</td><td>48.36</td><td>67.98</td></tr>
+            <tr><td>Fixed K=1</td><td>20.99%</td><td>58.90</td><td>83.69</td><td>82.70</td><td>2170.3</td><td>84.54</td><td>51.87</td><td>53.70</td><td>54.92</td><td>68.48</td></tr>
+            <tr class="ours"><td>Foveated Selector</td><td>20.99%</td><td>58.24</td><td>84.59</td><td>82.67</td><td>2186.7</td><td>84.92</td><td>52.13</td><td>58.40</td><td>57.84</td><td>69.61</td></tr>
+            <tr><td>Matched-Budget Downsample</td><td>19.82%</td><td>58.05</td><td>84.45</td><td>83.34</td><td>2303.0</td><td>84.77</td><td>54.53</td><td>67.00</td><td>53.48</td><td>70.99</td></tr>
+            <tr><td>2× Downsample</td><td>24.57%</td><td>58.82</td><td>85.12</td><td>84.15</td><td>2298.7</td><td>84.90</td><td>56.00</td><td>70.50</td><td>57.84</td><td>72.43</td></tr>
+            <tr class="group-start oracle"><td>K=1 Region-Choice Oracle</td><td>20.99%</td><td>70.42</td><td>92.22</td><td>90.85</td><td>2500.8</td><td>91.82</td><td>70.67</td><td>77.60</td><td>78.92</td><td>82.73</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="content">
+        <ul>
+          <li><b>The merger matches resizing at equal cost.</b> At 11.11% tokens, uniform Foveated Compression and iso-token downsampling show no significant paired difference (95% CI [−0.586, 0.521]), while the merger additionally keeps native-token compatibility.</li>
+          <li><b>Spatial preferences are learnable.</b> At 20.99%, the selector beats random allocation by +1.62 and training-only fixed allocation by +1.13 macro points; both 95% CIs exclude zero.</li>
+          <li><b>Localized fidelity is not universally better.</b> Strong whole-image resizing still leads on average. The selector wins on ChartQA (57.84 vs. 53.48), while resizing wins clearly on OCRBench and MME.</li>
+          <li><b>Large headroom remains.</b> Within the same 3×3, K=1 action space, the budget-matched oracle is 13.12 points above the learned selector.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why is selection hard -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Why Is Selection Hard?</h2>
+      <div class="content has-text-justified">
+        <p>
+          We probe whether a signal can predict <i>when</i> compression breaks a correct answer, on 3,416 matched examples
+          (chance = 0.50 AUC). Failure signals are <b>weak before prefill and strong after it</b>: the information the
+          selector would need is substantially more accessible after language-model computation, which a single-pass,
+          prefill-free selector cannot use.
+        </p>
+      </div>
+      <div class="columns">
+        <div class="column is-half">
+          <div class="results-table-wrapper">
+            <table class="results-table">
+              <thead><tr><th>Signal</th><th>Available</th><th>AUC</th></tr></thead>
+              <tbody>
+                <tr><td>Prefill-free raw signal</td><td>before LM</td><td>0.524</td></tr>
+                <tr><td>Prefill-free OOF probe</td><td>before LM</td><td>0.548</td></tr>
+                <tr class="group-start"><td>First-token entropy</td><td>after LM</td><td>0.765</td></tr>
+                <tr><td>Decoder-side OOF probe</td><td>after LM</td><td>0.807</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="results-table-wrapper">
+            <table class="results-table">
+              <thead><tr><th>Ablation (matched runs)</th><th>Δ Macro</th></tr></thead>
+              <tbody>
+                <tr><td>Behaviorally trained merger vs. mean pooling</td><td><b>+5.57</b></td></tr>
+                <tr><td>Tie-aware vs. single-winner supervision</td><td><b>+1.24</b></td></tr>
+                <tr><td>Full selector vs. question content removed</td><td>−0.03 (n.s.)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qualitative -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Qualitative Examples</h2>
+      <div class="figure-block">
+        <img src="assets/qualitative.png" alt="Qualitative examples across compression-robust, selection-rescued, and selection-miss regimes" loading="lazy">
+        <p class="figure-caption">
+          (a) <b>Compression-robust</b>: downsampling, the learned selector, and the K=1 oracle all succeed.
+          (b) <b>Selection-rescued</b>: downsampling fails, while the selector preserves a region that recovers the correct answer.
+          (c) <b>Selection-miss</b>: both fail, but another K=1 oracle action succeeds. Oracle regions are a diagnostic upper bound only.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Takeaways -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Takeaways</h2>
+      <div class="content">
+        <ol class="takeaway-list">
+          <li><b>One encoding serves two resolutions.</b> Compressed and native tokens come from the same full-resolution pass, so any region can be restored without re-encoding the image.</li>
+          <li><b>Allocation is learnable, but not yet dominant.</b> Learned allocation beats random and fixed regions, yet strong whole-image resizing still leads on average.</li>
+          <li><b>The 13-point oracle gap is an open problem.</b> Closing it likely needs selection signals that draw on language-model computation, together with stronger compressed representations.</li>
+        </ol>
+        <p class="is-size-6">
+          <b>Limitations.</b> Token ratios count visual tokens entering the language model, not end-to-end compute: the vision
+          encoder still runs once at full resolution, while pixel-space downsampling also shrinks encoder cost. Results cover one
+          frozen backbone (Qwen2.5-VL-7B) and the 3×3, K=1 action space only.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Poster -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Poster</h2>
+      <iframe src="assets/Foveated_Compression_Poster_A1.pdf" width="100%" height="700" title="Foveated Compression poster"></iframe>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{han2026foveated,
+  title     = {Foveated Compression: Selective High-Resolution Preservation for Token-Efficient VLMs},
+  author    = {Donghyun Han and Jangho Park and Yuseok Bae},
+  booktitle = {NeurIPS 2026 Workshop: VLM4RWD},
+  year      = {2026},
+  note      = {arXiv:2610.07729}
+}</code></pre>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This work was supported by IITP (RS-2022-II220124) and ETRI (26CB1200) grants funded by the Korean government (MSIT).
+            </p>
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>,
+              adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

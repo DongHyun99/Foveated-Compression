@@ -1,0 +1,128 @@
+/* Page-specific styles on top of the Academic Project Page Template. */
+
+.tldr {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 900px;
+  margin: 1.5rem auto 0;
+}
+
+.figure-block {
+  margin: 1.5rem 0;
+}
+
+.figure-block img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.figure-caption {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+.question-callout {
+  border-left: 4px solid var(--primary-color);
+  background: var(--background-secondary);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.component-card {
+  height: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  background: var(--background-primary);
+}
+
+.component-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat {
+  flex: 1 1 180px;
+  max-width: 240px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+}
+
+.stat .value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1.2;
+}
+
+.stat .label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.results-table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+table.results-table {
+  width: 100%;
+  font-size: 0.85rem;
+  border-collapse: collapse;
+}
+
+table.results-table th,
+table.results-table td {
+  padding: 0.4rem 0.5rem;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-color);
+}
+
+table.results-table th:first-child,
+table.results-table td:first-child {
+  text-align: left;
+}
+
+table.results-table thead th {
+  border-bottom: 2px solid var(--text-primary);
+}
+
+table.results-table tr.group-start td {
+  border-top: 2px solid var(--border-color);
+}
+
+table.results-table tr.ours td {
+  background: #eff6ff;
+  font-weight: 700;
+}
+
+table.results-table tr.oracle td {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.takeaway-list li {
+  margin-bottom: 0.75rem;
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+}
